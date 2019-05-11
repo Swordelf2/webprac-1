@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Publishers;
+import entity.Publishers;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

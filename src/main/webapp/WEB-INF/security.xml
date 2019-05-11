@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+
+    <!-- autp-config is for <form-login/> <http-basic/> <logout/> -->
+    <!-- use-expressions is for hasRole() and other funcs-->
+    <http auto-config="true" use-expressions="true">
+        <access-denied-handler error-page="/error403"/>
+        <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/addToCart**" access="hasRole('ROLE_USER')" />
+        <form-login login-processing-url="/j_spring_security_check"
+                    login-page="/login"
+                    default-target-url="/home"
+                    authentication-failure-url="/login?error=true" />
+        <logout logout-url="/login?logout=true" logout-success-url="/home" />
+        <anonymous username="guest" granted-authority="ROLE_ANONYMOUS" />
+        <!--<remember-me />-->
+        <csrf disabled="true"/>
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <!--<user-service>
+                <user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+                <user name="user" password="user" authorities="ROLE_USER"/>
+            </user-service>-->
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="
+        SELECT username, password, enabled
+        FROM (SELECT email AS username, password, 'true' AS enabled FROM clients
+                UNION
+                SELECT email AS username, password, 'true' AS enabled FROM workers) t
+        WHERE username=?;"
+
+                               authorities-by-username-query="
+        SELECT username, role
+        FROM (SELECT email AS username, 'ROLE_USER' AS role FROM clients
+                UNION
+                SELECT email AS username, 'ROLE_ADMIN' AS role FROM workers) t
+        WHERE username=?;"
+            />
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>

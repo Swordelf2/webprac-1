@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Orders;
+import entity.Orders;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

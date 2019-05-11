@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Workers;
+import entity.Workers;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -52,5 +52,19 @@ public class WorkersDao {
         session.delete(w);
         session.getTransaction().commit();
         session.close();
+    }
+
+    @Transactional
+    public Workers workerByLogin(String login) {
+        Session session = factory.openSession();
+        @SuppressWarnings("unchecked")
+        List<Workers> workersList = (List<Workers>) session
+                .createQuery("from entity.Workers where email=:login").
+                        setParameter("login", login).list();
+        if (workersList.size() == 0) {
+            return null;
+        } else {
+            return workersList.get(0);
+        }
     }
 }

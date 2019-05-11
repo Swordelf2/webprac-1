@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Clients;
+import entity.Clients;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,7 @@ public class ClientsDao {
     public int add(Clients client) {
         Session session = factory.openSession();
         Serializable id = session.save(client);
+        session.flush();
         session.close();
         return (Integer) id;
     }
@@ -62,5 +63,19 @@ public class ClientsDao {
         List<Clients> list = session.createQuery("from Clients").list();
         session.close();
         return list;
+    }
+
+    @Transactional
+    public Clients clientByLogin(String login) {
+        Session session = factory.openSession();
+        @SuppressWarnings("unchecked")
+        List<Clients> clientsList = (List<Clients>) session
+                .createQuery("from entity.Clients where email=:login").
+                        setParameter("login", login).list();
+        if (clientsList.size() == 0) {
+            return null;
+        } else {
+            return clientsList.get(0);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Authors;
+import entity.Authors;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

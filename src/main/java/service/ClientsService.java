@@ -1,7 +1,7 @@
 package service;
 
 import dao.ClientsDao;
-import entities.Clients;
+import entity.Clients;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -28,5 +28,9 @@ public class ClientsService {
 
     public List<Clients> list() {
         return dao.list();
+    }
+
+    public Clients clientByLogin(String login) {
+        return dao.clientByLogin(login);
     }
 }

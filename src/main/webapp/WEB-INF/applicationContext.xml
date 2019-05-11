@@ -30,14 +30,7 @@
         </property>
         <property name="mappingLocations">
             <list>
-                <value>
-                    classpath:bookshop.hbm.xml
-                </value>
-            </list>
-        </property>
-        <property name="annotatedClasses">
-            <list>
-                <value>entities.Idea</value>
+                <value>classpath:bookshop.hbm.xml</value>
             </list>
         </property>
     </bean>
@@ -49,6 +42,8 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="clientsService" class="service.ClientsService"/>
+    <bean id="workersService" class="service.WorkersService"/>
+    <bean id="booksService" class="service.BooksService"/>
     <bean id="authorsDao" class="dao.AuthorsDao"/>
     <bean id="booksDao" class="dao.BooksDao"/>
     <bean id="clientsDao" class="dao.ClientsDao"/>
@@ -56,5 +51,8 @@
     <bean id="ordersDao" class="dao.PublishersDao"/>
     <bean id="publishersDao" class="dao.PublishersDao"/>
     <bean id="workersDao" class="dao.WorkersDao"/>
+
+    <import resource="security.xml"/>
+
 
     </beans>

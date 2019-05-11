@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping package="entities">
+<hibernate-mapping package="entity">
     <class name="Authors" table="authors" schema="public" catalog="bookshop">
         <id name="authorId">
             <column name="author_id" sql-type="integer"/>
@@ -19,6 +19,7 @@
     <class name="Books" table="books" schema="public" catalog="bookshop">
         <id name="bookId">
             <column name="book_id" sql-type="integer"/>
+            <generator class="identity"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(100)" length="100" not-null="true"/>
@@ -41,7 +42,7 @@
         <property name="annotation">
             <column name="annotation" sql-type="varchar(500)" length="500" not-null="true"/>
         </property>
-        <many-to-one name="publishersByPublisherId" class="Publishers">
+        <many-to-one name="publishersByPublisherId" class="Publishers" lazy="false">
             <column name="publisher_id" not-null="true"/>
         </many-to-one>
         <set name="authorSet" table="books_authors">
@@ -60,6 +61,7 @@
     <class name="Clients" table="clients" schema="public" catalog="bookshop">
         <id name="clientId">
             <column name="client_id" sql-type="integer"/>
+            <generator class="identity"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(100)" length="100" not-null="true"/>
@@ -83,6 +85,7 @@
     <class name="Genres" table="genres" schema="public" catalog="bookshop">
         <id name="genreId">
             <column name="genre_id" sql-type="integer"/>
+            <generator class="identity"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(100)" length="100" not-null="true"/>
@@ -95,6 +98,7 @@
     <class name="Orders" table="orders" schema="public" catalog="bookshop">
         <id name="orderId">
             <column name="order_id" sql-type="integer"/>
+            <generator class="identity"/>
         </id>
         <property name="deliveryDate">
             <column name="delivery_date" sql-type="date" not-null="true"/>
@@ -111,7 +115,7 @@
         <property name="notes">
             <column name="notes" sql-type="varchar(500)" length="500" not-null="true"/>
         </property>
-        <many-to-one name="clientsByClientId" class="Clients">
+        <many-to-one name="clientsByClientId" class="Clients" lazy="false">
             <column name="client_id" not-null="true"/>
         </many-to-one>
         <set name="bookSet" table="orders_books">
@@ -122,6 +126,7 @@
     <class name="Publishers" table="publishers" schema="public" catalog="bookshop">
         <id name="publisherId">
             <column name="publisher_id" sql-type="integer"/>
+            <generator class="identity"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(100)" length="100" not-null="true"/>
@@ -142,6 +147,7 @@
     <class name="Workers" table="workers" schema="public" catalog="bookshop">
         <id name="workerId">
             <column name="worker_id" sql-type="integer"/>
+            <generator class="identity"/>
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(100)" length="100" not-null="true"/>

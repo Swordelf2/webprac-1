@@ -1,8 +1,6 @@
 package dao;
 
-import entities.Authors;
-import entities.Books;
-import entities.Publishers;
+import entity.Books;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 
 @EnableTransactionManagement
@@ -23,11 +21,11 @@ public class BooksDao {
     SessionFactory factory;
 
     @Transactional
-    public Books getBookById(int id) {
+    public Books get(int id) {
         Session session = factory.openSession();
-        Books books  = (Books) session.get(Books.class, id);
+        Books identifier = (Books) session.get(Books.class, id);
         session.close();
-        return books;
+        return identifier;
     }
 
     /* get list of books which satisfy user's search query */
@@ -64,51 +62,31 @@ public class BooksDao {
     }
 
     @Transactional
-    public int addBook(String name, int publisher, double price, int year, int pages, String cover, int quantity,
-                       String annotation, Set<Authors> authors) {
-        Books b = new Books();
-        b.setName(name);
-        b.setPrice(new BigDecimal(price));
-        b.setYear(year);
-        b.setPages(pages);
-        b.setCover(cover);
-        b.setQuantity(quantity);
-        b.setAnnotation(annotation);
-        b.setAuthorSet(authors);
-
+    public int add(Books book) {
         Session session = factory.openSession();
-        session.beginTransaction();
-        Query q = session.createQuery("from Publishers where publisherId = :id");
-        q.setParameter("id", publisher);
-        List<Publishers> pl = q.list();
-        session.getTransaction().commit();
+        Serializable id = session.save(book);
+        session.flush();
         session.close();
-
-        Publishers p = pl.get(0);
-        b.setPublishersByPublisherId(p);
-
-        session = factory.openSession();
-        session.beginTransaction();
-        session.save(b);
-        q = session.createQuery("from Books");
-        List<Books> bl = q.list();
-        int res = bl.get(bl.size() - 1).getBookId();
-        session.getTransaction().commit();
-        session.close();
-
-        return res;
+        return (Integer) id;
     }
 
     @Transactional
-    public void removeBook(int id) {
+    public int delete(int id) {
         Session session = factory.openSession();
-        session.beginTransaction();
-        Query q = session.createQuery("from Books where bookId = :id");
-        q.setParameter("id", id);
-        List<Books> bl = q.list();
-        Books b = bl.get(0);
-        session.delete(b);
-        session.getTransaction().commit();
+        Books client = (Books) session.get(Books.class, id);
+        session.delete(client);
+        Serializable identifier = session.getIdentifier(client);
+        session.flush();
         session.close();
+        return (Integer) identifier;
+    }
+
+    @Transactional
+    public List<Books> list() {
+        Session session = factory.openSession();
+        @SuppressWarnings("unchecked")
+        List<Books> list = session.createQuery("from Books").list();
+        session.close();
+        return list;
     }
 }

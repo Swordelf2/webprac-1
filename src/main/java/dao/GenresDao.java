@@ -1,6 +1,6 @@
 package dao;
 
-import entities.Genres;
+import entity.Genres;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

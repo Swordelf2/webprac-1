@@ -8,7 +8,7 @@
       <ObjectId>16386</ObjectId>
       <StateNumber>558</StateNumber>
       <Owner>lngsv</Owner>
-      <IntrospectionStateNumber>854</IntrospectionStateNumber>
+      <IntrospectionStateNumber>866</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
       <Relations>sequence|table|16665|16667|1
@@ -109,7 +109,7 @@ sequence|table|16803|16805|1
       <Comment>standard public schema</Comment>
       <StateNumber>351</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>855</IntrospectionStateNumber>
+      <IntrospectionStateNumber>867</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -256,7 +256,7 @@ sequence|table|16803|16805|1
     <table id="37" parent="17" name="clients">
       <ObjectId>16678</ObjectId>
       <Owner>lngsv</Owner>
-      <StateNumber>692</StateNumber>
+      <StateNumber>856</StateNumber>
     </table>
     <table id="38" parent="17" name="genres">
       <ObjectId>16686</ObjectId>
@@ -271,7 +271,7 @@ sequence|table|16803|16805|1
     <table id="40" parent="17" name="orders">
       <ObjectId>16667</ObjectId>
       <Owner>lngsv</Owner>
-      <StateNumber>699</StateNumber>
+      <StateNumber>856</StateNumber>
     </table>
     <table id="41" parent="17" name="orders_books">
       <ObjectId>16754</ObjectId>
@@ -700,27 +700,37 @@ genre_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>orders_pkey</UnderlyingIndexName>
     </key>
-    <column id="103" parent="41" name="order_id">
+    <foreign-key id="103" parent="40" name="fk_ktwyfbqs32h2qw22odq9pqmex">
+      <ObjectId>16845</ObjectId>
+      <StateNumber>856</StateNumber>
+      <ColNames>client_id</ColNames>
+      <RefTableId>16678</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>clients</RefTableName>
+      <RefKeyName>clients_pkey</RefKeyName>
+      <RefColNames>client_id</RefColNames>
+    </foreign-key>
+    <column id="104" parent="41" name="order_id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="104" parent="41" name="book_id">
+    <column id="105" parent="41" name="book_id">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="105" parent="41" name="quantity">
+    <column id="106" parent="41" name="quantity">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>699</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <index id="106" parent="41" name="orders_books_pkey">
+    <index id="107" parent="41" name="orders_books_pkey">
       <ObjectId>16757</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>order_id
@@ -728,7 +738,7 @@ book_id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="107" parent="41" name="orders_books_pkey">
+    <key id="108" parent="41" name="orders_books_pkey">
       <ObjectId>16758</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>order_id
@@ -736,7 +746,7 @@ book_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>orders_books_pkey</UnderlyingIndexName>
     </key>
-    <foreign-key id="108" parent="41" name="orders_books_order_id_fkey">
+    <foreign-key id="109" parent="41" name="orders_books_order_id_fkey">
       <ObjectId>16759</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>order_id</ColNames>
@@ -746,7 +756,7 @@ book_id</ColNames>
       <RefKeyName>orders_pkey</RefKeyName>
       <RefColNames>order_id</RefColNames>
     </foreign-key>
-    <foreign-key id="109" parent="41" name="orders_books_book_id_fkey">
+    <foreign-key id="110" parent="41" name="orders_books_book_id_fkey">
       <ObjectId>16764</ObjectId>
       <StateNumber>699</StateNumber>
       <ColNames>book_id</ColNames>
@@ -756,7 +766,7 @@ book_id</ColNames>
       <RefKeyName>books_pkey</RefKeyName>
       <RefColNames>book_id</RefColNames>
     </foreign-key>
-    <column id="110" parent="42" name="publisher_id">
+    <column id="111" parent="42" name="publisher_id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -764,39 +774,39 @@ book_id</ColNames>
       <DefaultExpression>nextval(&apos;publishers_publisher_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="111" parent="42" name="name">
+    <column id="112" parent="42" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <StateNumber>694</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="112" parent="42" name="city">
+    <column id="113" parent="42" name="city">
       <Position>3</Position>
       <DataType>varchar(50)|0s</DataType>
       <StateNumber>694</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="113" parent="42" name="country">
+    <column id="114" parent="42" name="country">
       <Position>4</Position>
       <DataType>varchar(50)|0s</DataType>
       <StateNumber>694</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="114" parent="42" name="publishers_pkey">
+    <index id="115" parent="42" name="publishers_pkey">
       <ObjectId>16698</ObjectId>
       <StateNumber>694</StateNumber>
       <ColNames>publisher_id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="115" parent="42" name="publishers_pkey">
+    <key id="116" parent="42" name="publishers_pkey">
       <ObjectId>16699</ObjectId>
       <StateNumber>694</StateNumber>
       <ColNames>publisher_id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>publishers_pkey</UnderlyingIndexName>
     </key>
-    <column id="116" parent="43" name="worker_id">
+    <column id="117" parent="43" name="worker_id">
       <Position>1</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -804,32 +814,32 @@ book_id</ColNames>
       <DefaultExpression>nextval(&apos;workers_worker_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>23</TypeId>
     </column>
-    <column id="117" parent="43" name="name">
+    <column id="118" parent="43" name="name">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <StateNumber>700</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="118" parent="43" name="email">
+    <column id="119" parent="43" name="email">
       <Position>3</Position>
       <DataType>varchar(200)|0s</DataType>
       <StateNumber>700</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="119" parent="43" name="password">
+    <column id="120" parent="43" name="password">
       <Position>4</Position>
       <DataType>varchar(20)|0s</DataType>
       <StateNumber>700</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="120" parent="43" name="workers_pkey">
+    <index id="121" parent="43" name="workers_pkey">
       <ObjectId>16775</ObjectId>
       <StateNumber>700</StateNumber>
       <ColNames>worker_id</ColNames>
       <Unique>1</Unique>
       <Primary>1</Primary>
     </index>
-    <key id="121" parent="43" name="workers_pkey">
+    <key id="122" parent="43" name="workers_pkey">
       <ObjectId>16776</ObjectId>
       <StateNumber>700</StateNumber>
       <ColNames>worker_id</ColNames>
